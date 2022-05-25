@@ -14,7 +14,7 @@ namespace Domain.Interfaces.Service.User
         Task<IEnumerable<UserDto>> GetAll();
         Task<IEnumerable<UserDto>> GetByCRP(string crp);
         Task<UserDtoResult> Post(UserDto user);
-        Task<UserDtoResult> Put(UserDto user);
+        Task<UserDtoResult> Put(UserDto user, int id);
         Task<bool> Delete(int id);
     }
 }

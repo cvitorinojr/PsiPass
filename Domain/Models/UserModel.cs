@@ -36,6 +36,21 @@ namespace Domain.Models
             get { return _crp; }
             set { _crp = value; }
         }
+        private int _userTypeId;
+
+        public int UserTypeId
+        {
+            get { return _userTypeId; }
+            set { _userTypeId = value; }
+        }
+        private int _userSpecialtyId;
+
+        public int UserSpecialtyId
+        {
+            get { return _userSpecialtyId; }
+            set { _userSpecialtyId = value; }
+        }
+
 
     }
 }

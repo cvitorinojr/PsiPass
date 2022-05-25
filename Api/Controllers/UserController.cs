@@ -79,7 +79,7 @@ namespace application.Controllers
             }
             try
             {
-                var result = await _service.Post(user);
+                UserDtoResult result = await _service.Post(user);
                 if (result != null)
                 {
                     return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
@@ -96,7 +96,7 @@ namespace application.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UserDto user)
+        public async Task<ActionResult> Put([FromBody] UserDto user, [FromHeader]int id)
         {
             if (!ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace application.Controllers
             }
             try
             {
-                var result = await _service.Put(user);
+                UserDtoResult result = await _service.Put(user, id);
                 if (result != null)
                 {
                     return Ok(result);

@@ -13,7 +13,7 @@ namespace Domain.Dtos.User
         public string Name { get; set; }
         public string Email { get; set; }
         public string CRP { get; set; }
-        public int Type { get; set; }
-        public int Specialty { get; set; }
+        public int UserTypeId { get; set; }
+        public int UserSpecialtyId { get; set; }
     }
 }

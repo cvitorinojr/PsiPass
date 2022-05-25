@@ -74,7 +74,7 @@ namespace Data.Repository
         {
             try
             {
-                return _context.Set<T>().SingleOrDefaultAsync(p => p.Id.Equals(id)).Result;
+                return await _context.Set<T>().SingleOrDefaultAsync(p => p.Id.Equals(id));
             }
             catch (Exception ex)
             {

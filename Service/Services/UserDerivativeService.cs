@@ -7,13 +7,13 @@ using Domain.Interfaces.Service.User;
 
 namespace Service.Services
 {
-    public class UserDerivateService : IUserDerivateService
+    public class UserDerivativeService : IUserDerivateService
     {
         private IRepository<UserSpecialty> _specialtyRepository;
         private IRepository<UserType> _typeRepository;
         private readonly IMapper _mapper;
 
-        public UserDerivateService(IRepository<UserSpecialty> SpecialtyRepository, IRepository<UserType> TypeRepository, IMapper mapper)
+        public UserDerivativeService(IRepository<UserSpecialty> SpecialtyRepository, IRepository<UserType> TypeRepository, IMapper mapper)
         {
             _specialtyRepository = SpecialtyRepository;
             _typeRepository = TypeRepository;
