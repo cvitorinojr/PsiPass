@@ -64,6 +64,10 @@ namespace Api.Service.Services
 
         public async Task<UserDtoResult> Put(UserDto user, int id)
         {
+            var temp = _repository.SelectAsync(id);
+
+            if(temp == null)
+                throw new ArgumentException("Usuario não encontrado");
 
             var model = _mapper.Map<UserModel>(user);
 
@@ -74,8 +78,7 @@ namespace Api.Service.Services
                 throw new ArgumentException("Especialidade não existe");
 
             var entity = _mapper.Map<User>(model);
-            var temp = _repository.SelectAsync(id);
-
+            
             entity.UserTypeId = (entity.UserTypeId == 0 ? temp.Result.UserTypeId : entity.UserTypeId);
             entity.UserSpecialtyId = (entity.UserSpecialtyId == 0 ? temp.Result.UserSpecialtyId : entity.UserSpecialtyId);
             entity.CRP = (string.IsNullOrEmpty(entity.CRP) ? temp.Result.CRP : entity.CRP);
