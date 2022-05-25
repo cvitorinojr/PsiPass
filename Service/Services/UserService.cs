@@ -34,6 +34,10 @@ namespace Api.Service.Services
         public async Task<UserDtoResult> Get(int id)
         {
             var entity = await _repository.SelectAsync(id);
+
+            if (entity == null)
+                throw new ArgumentException("Usuario não encontrado");
+
             return _mapper.Map<UserDtoResult>(entity);
         }
 
@@ -46,10 +50,10 @@ namespace Api.Service.Services
         public async Task<UserDtoResult> Post(UserDto user)
         {
             if (!(await _typeRepository.ExistAsync(user.UserTypeId)))
-                throw new Exception("Tipo de usuario não existe");
+                throw new ArgumentException("Tipo de usuario não existe");
 
             if (!(await _specialtyRespository.ExistAsync(user.UserSpecialtyId)))
-                throw new Exception("Especialidade não existe");
+                throw new ArgumentException("Especialidade não existe");
             
             var model = _mapper.Map<UserModel>(user);
             var entity = _mapper.Map<User>(model);
@@ -64,10 +68,10 @@ namespace Api.Service.Services
             var model = _mapper.Map<UserModel>(user);
 
             if (model.UserTypeId != 0 && !(await _typeRepository.ExistAsync(model.UserTypeId)))
-                throw new Exception("Tipo de usuario não existe");
+                throw new ArgumentException("Tipo de usuario não existe");
 
             if (model.UserSpecialtyId != 0 && !(await _specialtyRespository.ExistAsync(model.UserSpecialtyId)))
-                throw new Exception("Especialidade não existe");
+                throw new ArgumentException("Especialidade não existe");
 
             var entity = _mapper.Map<User>(model);
             var temp = _repository.SelectAsync(id);
@@ -85,6 +89,10 @@ namespace Api.Service.Services
         public async Task<IEnumerable<UserDtoResult>> GetByCRP(string crp)
         {
             var entities = await _repository.FindBy(x => x.CRP.Equals(crp));
+
+            if (entities == null)
+                throw new ArgumentException("Usuario não encontrado");
+
             return _mapper.Map<IEnumerable<UserDtoResult>>(entities);
         }
 
