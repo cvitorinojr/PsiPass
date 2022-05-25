@@ -24,9 +24,8 @@ namespace application.Controllers
         public async Task<IActionResult> Get(int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             try
             {
                 return Ok(await _service.Get(id));
@@ -40,9 +39,8 @@ namespace application.Controllers
         public async Task<IActionResult> GetAll()
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             try
             {
                 return Ok(await _service.GetAll());
@@ -57,9 +55,8 @@ namespace application.Controllers
         public async Task<IActionResult> GetByCRP(string crp)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             try
             {
                 return Ok(await _service.GetByCRP(crp));
@@ -74,20 +71,17 @@ namespace application.Controllers
         public async Task<ActionResult> Post([FromBody] UserDto user)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             try
             {
                 UserDtoResult result = await _service.Post(user);
                 if (result != null)
-                {
                     return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
-                }
+
                 else
-                {
                     return BadRequest();
-                }
+
             }
             catch (ArgumentException e)
             {
@@ -96,23 +90,19 @@ namespace application.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UserDto user, [FromHeader]int id)
+        [Route("{Id}")]
+        public async Task<ActionResult> Put([FromBody] UserDto user, [FromRoute]int id)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid || id == 0)
                 return BadRequest(ModelState);
-            }
+
             try
             {
                 UserDtoResult result = await _service.Put(user, id);
                 if (result != null)
-                {
                     return Ok(result);
-                }
                 else
-                {
                     return BadRequest();
-                }
             }
             catch (ArgumentException e)
             {
@@ -124,9 +114,8 @@ namespace application.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return BadRequest(ModelState);
+
             try
             {
                 return Ok(await _service.Delete(id));

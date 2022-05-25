@@ -31,16 +31,16 @@ namespace Api.Service.Services
             return await _repository.DeleteAsync(id);
         }
 
-        public async Task<UserDto> Get(int id)
+        public async Task<UserDtoResult> Get(int id)
         {
             var entity = await _repository.SelectAsync(id);
-            return _mapper.Map<UserDto>(entity);
+            return _mapper.Map<UserDtoResult>(entity);
         }
 
-        public async Task<IEnumerable<UserDto>> GetAll()
+        public async Task<IEnumerable<UserDtoResult>> GetAll()
         {
             var entities = await _repository.SelectAsync();
-            return _mapper.Map<IEnumerable<UserDto>>(entities);
+            return _mapper.Map<IEnumerable<UserDtoResult>>(entities);
         }
 
         public async Task<UserDtoResult> Post(UserDto user)
@@ -74,7 +74,7 @@ namespace Api.Service.Services
 
             entity.UserTypeId = (entity.UserTypeId == 0 ? temp.Result.UserTypeId : entity.UserTypeId);
             entity.UserSpecialtyId = (entity.UserSpecialtyId == 0 ? temp.Result.UserSpecialtyId : entity.UserSpecialtyId);
-            entity.CRP = (String.IsNullOrEmpty(entity.CRP) ? temp.Result.CRP : entity.CRP);
+            entity.CRP = (string.IsNullOrEmpty(entity.CRP) ? temp.Result.CRP : entity.CRP);
 
             entity.Id = id;
             var result = await _repository.UpdateAsync(entity);
@@ -82,10 +82,10 @@ namespace Api.Service.Services
             return _mapper.Map<UserDtoResult>(result);
         }
         
-        public async Task<IEnumerable<UserDto>> GetByCRP(string crp)
+        public async Task<IEnumerable<UserDtoResult>> GetByCRP(string crp)
         {
             var entities = await _repository.FindBy(x => x.CRP.Equals(crp));
-            return _mapper.Map<IEnumerable<UserDto>>(entities);
+            return _mapper.Map<IEnumerable<UserDtoResult>>(entities);
         }
 
     }
